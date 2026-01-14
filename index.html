@@ -94,43 +94,50 @@
             font-size: 22px;
         }
 
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .option-btn {
+        .answer-input {
+            width: 100%;
             padding: 15px;
             border: 2px solid #ddd;
-            background: white;
             border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .answer-input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 16px;
-            text-align: left;
         }
 
-        .option-btn:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-            transform: translateX(5px);
+        .submit-btn:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .option-btn.correct {
-            background: #4caf50;
-            color: white;
-            border-color: #4caf50;
-        }
-
-        .option-btn.incorrect {
-            background: #f44336;
-            color: white;
-            border-color: #f44336;
-        }
-
-        .option-btn:disabled {
+        .submit-btn:disabled {
+            background: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
 
         .feedback {
@@ -235,7 +242,12 @@
                 font-size: 18px;
             }
 
-            .option-btn {
+            .answer-input {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
                 padding: 12px;
                 font-size: 14px;
             }
@@ -301,10 +313,18 @@
                 </div>
 
                 <div class="question" id="question">
-                    Kur yra <span class="highlight-text" id="location-name"></span>?
+                    Kokia tai vieta?
                 </div>
 
-                <div class="options" id="options"></div>
+                <input
+                    type="text"
+                    id="answer-input"
+                    class="answer-input"
+                    placeholder="Įveskite atsakymą..."
+                    autocomplete="off"
+                />
+
+                <button class="submit-btn" id="submit-btn">Patikrinti</button>
 
                 <div class="feedback" id="feedback"></div>
 
@@ -373,22 +393,6 @@
             return geographyData[selectedCategory];
         }
 
-        // Generate random options
-        function generateOptions(correctAnswer) {
-            const allLocations = getAllLocations();
-            const options = [correctAnswer];
-
-            while (options.length < 4 && options.length < allLocations.length) {
-                const randomLocation = allLocations[Math.floor(Math.random() * allLocations.length)];
-                if (!options.find(opt => opt.name === randomLocation.name)) {
-                    options.push(randomLocation);
-                }
-            }
-
-            // Shuffle options
-            return options.sort(() => Math.random() - 0.5);
-        }
-
         // Add marker with pulse animation
         function addMarker(location) {
             if (currentMarker) {
@@ -397,13 +401,20 @@
 
             const icon = L.divIcon({
                 className: 'pulse-marker',
-                html: '<div style="background-color: #667eea; width: 30px; height: 30px; border-radius: 50%; border: 4px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15]
+                html: '<div style="background-color: #ff4444; width: 40px; height: 40px; border-radius: 50%; border: 5px solid white; box-shadow: 0 0 20px rgba(255,68,68,0.8);"></div>',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20]
             });
 
             currentMarker = L.marker([location.lat, location.lng], { icon }).addTo(map);
-            map.setView([location.lat, location.lng], location.zoom);
+
+            // Center map on marker with smooth animation
+            setTimeout(() => {
+                map.flyTo([location.lat, location.lng], location.zoom, {
+                    duration: 1.5,
+                    easeLinearity: 0.5
+                });
+            }, 100);
         }
 
         // Load new question
@@ -416,58 +427,47 @@
             }
 
             currentQuestion = allLocations[Math.floor(Math.random() * allLocations.length)];
-            const options = generateOptions(currentQuestion);
 
             // Update UI
-            document.getElementById('location-name').textContent = currentQuestion.name;
             document.getElementById('question-num').textContent = questionNum;
 
             // Add marker
             addMarker(currentQuestion);
 
-            // Generate option buttons
-            const optionsContainer = document.getElementById('options');
-            optionsContainer.innerHTML = '';
+            // Reset input and buttons
+            const answerInput = document.getElementById('answer-input');
+            answerInput.value = '';
+            answerInput.disabled = false;
+            answerInput.focus();
 
-            options.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.textContent = option.name;
-                button.onclick = () => checkAnswer(option, button);
-                optionsContainer.appendChild(button);
-            });
-
-            // Reset feedback and next button
+            document.getElementById('submit-btn').disabled = false;
             document.getElementById('feedback').className = 'feedback';
             document.getElementById('next-btn').disabled = true;
         }
 
         // Check answer
-        function checkAnswer(selectedOption, button) {
-            const allButtons = document.querySelectorAll('.option-btn');
-            allButtons.forEach(btn => btn.disabled = true);
-
-            const isCorrect = selectedOption.name === currentQuestion.name;
+        function checkAnswer() {
+            const answerInput = document.getElementById('answer-input');
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = currentQuestion.name.toLowerCase();
             const feedback = document.getElementById('feedback');
 
+            // Disable input and submit button
+            answerInput.disabled = true;
+            document.getElementById('submit-btn').disabled = true;
+
+            // Check if answer is correct (case insensitive)
+            const isCorrect = userAnswer === correctAnswer;
+
             if (isCorrect) {
-                button.classList.add('correct');
                 feedback.className = 'feedback correct show';
                 feedback.textContent = '✓ Teisingai! Puiku!';
                 score += 10;
                 correct++;
             } else {
-                button.classList.add('incorrect');
                 feedback.className = 'feedback incorrect show';
                 feedback.textContent = `✗ Neteisingai. Teisingas atsakymas: ${currentQuestion.name}`;
                 incorrect++;
-
-                // Highlight correct answer
-                allButtons.forEach(btn => {
-                    if (btn.textContent === currentQuestion.name) {
-                        btn.classList.add('correct');
-                    }
-                });
             }
 
             // Update stats
@@ -478,6 +478,16 @@
             // Enable next button
             document.getElementById('next-btn').disabled = false;
         }
+
+        // Submit answer handler
+        document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+
+        // Allow Enter key to submit
+        document.getElementById('answer-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !document.getElementById('submit-btn').disabled) {
+                checkAnswer();
+            }
+        });
 
         // Next question handler
         document.getElementById('next-btn').addEventListener('click', () => {
