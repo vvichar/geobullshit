@@ -596,6 +596,7 @@
         let selectedCategory = 'all';
         let userInteracted = false;
         let answeredQuestions = new Set();
+        let questionReady = false; // Guard against Enter key auto-repeat
 
         // Initialize map
         const map = L.map('map').setView([20, 0], 2);
@@ -646,6 +647,9 @@
 
         // Load new question
         function loadQuestion() {
+            // Prevent Enter key auto-repeat from triggering checkAnswer
+            questionReady = false;
+
             const allLocations = getAllLocations();
 
             if (allLocations.length === 0) {
@@ -683,9 +687,16 @@
             const submitBtn = document.getElementById('submit-btn');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Patikrinti';
-            submitBtn.onclick = checkAnswer;
+            submitBtn.onclick = () => {
+                if (questionReady) {
+                    checkAnswer();
+                }
+            };
 
             document.getElementById('feedback').className = 'feedback';
+
+            // Allow answer submission after brief delay (prevents Enter key auto-repeat)
+            setTimeout(() => { questionReady = true; }, 100);
         }
 
         // Check answer
@@ -792,7 +803,10 @@
             if (e.key === 'Enter' && !document.getElementById('submit-btn').disabled) {
                 const submitBtn = document.getElementById('submit-btn');
                 if (submitBtn.textContent === 'Patikrinti') {
-                    checkAnswer();
+                    // Only submit if question is ready (prevents Enter key auto-repeat bug)
+                    if (questionReady) {
+                        checkAnswer();
+                    }
                 } else {
                     questionNum++;
                     loadQuestion();
