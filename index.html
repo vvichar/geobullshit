@@ -26,6 +26,11 @@
             padding: 15px 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
+            display: none;
+        }
+
+        .header.show {
+            display: block;
         }
 
         .header h1 {
@@ -55,9 +60,13 @@
         }
 
         .container {
-            display: flex;
+            display: none;
             flex: 1;
             overflow: hidden;
+        }
+
+        .container.show {
+            display: flex;
         }
 
         #map {
@@ -370,11 +379,258 @@
                 font-size: 18px;
             }
         }
+
+        /* Homepage styles */
+        .homepage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10001;
+        }
+
+        .homepage.hidden {
+            display: none;
+        }
+
+        .homepage-content {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .homepage h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+
+        .test-mode-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .mode-btn {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-icon {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .mode-title {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .mode-desc {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .homepage h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            .test-mode-selection {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .mode-btn {
+                padding: 30px 20px;
+            }
+
+            .mode-icon {
+                font-size: 48px;
+            }
+
+            .mode-title {
+                font-size: 22px;
+            }
+
+            .mode-desc {
+                font-size: 14px;
+            }
+        }
+
+        /* Reference map overlay */
+        .reference-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+        }
+
+        .reference-overlay.show {
+            display: flex;
+        }
+
+        .reference-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+        }
+
+        #reference-title {
+            padding: 20px 20px 15px 20px;
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+        }
+
+        #reference-map-display {
+            flex: 1;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .map-label {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .reference-content {
+                width: 95%;
+                height: 95%;
+            }
+
+            #reference-title {
+                font-size: 18px;
+                padding: 15px;
+            }
+
+            .close-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+        }
+
+        /* Reference button in quiz panel */
+        .reference-btn {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .reference-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
+    <div class="homepage" id="homepage">
+        <div class="homepage-content">
+            <h1>🌍 Geografijos Mokymosi Programa</h1>
+            <p class="subtitle">Pasirinkite testą</p>
+
+            <div class="test-mode-selection">
+                <button class="mode-btn" data-mode="global">
+                    <span class="mode-icon">🌍</span>
+                    <h2 class="mode-title">Pasaulio Geografija</h2>
+                    <p class="mode-desc">Kalnai, upės ir ežerai iš viso pasaulio</p>
+                </button>
+
+                <button class="mode-btn" data-mode="lithuania">
+                    <span class="mode-icon">🇱🇹</span>
+                    <h2 class="mode-title">Lietuvos Geografija</h2>
+                    <p class="mode-desc">Upės, ežerai, marių ir aukštumos</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="header">
-        <h1>🌍 Geografijos Mokymosi Programa</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h1 style="margin-bottom: 0;">🌍 Geografijos Mokymosi Programa</h1>
+            <button id="home-btn" style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">← Grįžti</button>
+        </div>
         <div class="stats">
             <div class="stat-item">
                 <span>Taškai:</span>
@@ -421,6 +677,14 @@
         </div>
     </div>
 
+    <div class="reference-overlay" id="reference-overlay">
+        <div class="reference-content">
+            <button class="close-btn" id="close-reference">×</button>
+            <h2 id="reference-title">Geografijos žemėlapis</h2>
+            <div id="reference-map-display"></div>
+        </div>
+    </div>
+
     <div class="container">
         <div id="map"></div>
 
@@ -435,6 +699,8 @@
                         <option value="lakes">Ežerai</option>
                     </select>
                 </div>
+
+                <button class="reference-btn" id="reference-btn">📍 Žiūrėti žemėlapį</button>
 
                 <div class="question" id="question">
                     Kokia tai vieta?
@@ -457,9 +723,14 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Geography data with coordinates and polygons
-        const geographyData = {
-            mountains: [
+        // Test modes configuration with multiple test sets
+        const testModes = {
+            global: {
+                name: "Pasaulio Geografija",
+                center: [20, 0],
+                zoom: 2,
+                categories: {
+                    mountains: [
                 {
                     name: "Andų kalnai", lat: -15, lng: -70, zoom: 4, type: "mountains",
                     polygon: [[-55, -70], [-45, -75], [-25, -71], [-10, -77], [5, -79], [11, -75], [11, -71], [5, -68], [-10, -66], [-25, -65], [-45, -68], [-55, -70]]
@@ -556,11 +827,239 @@
                     name: "Negyvoji jūra", lat: 31.5, lng: 35.5, zoom: 8, type: "lakes",
                     polygon: [[31.8, 35.4], [31.7, 35.6], [31.4, 35.6], [31.2, 35.5], [31.3, 35.3], [31.5, 35.2], [31.7, 35.3], [31.8, 35.4]]
                 },
-                {
-                    name: "Kaspijos jūra", lat: 42, lng: 51, zoom: 5, type: "lakes",
-                    polygon: [[47, 50], [46, 53], [43, 54], [40, 53], [37, 51], [37, 48], [39, 47], [42, 47], [45, 48], [47, 50]]
+                        {
+                            name: "Kaspijos jūra", lat: 42, lng: 51, zoom: 5, type: "lakes",
+                            polygon: [[47, 50], [46, 53], [43, 54], [40, 53], [37, 51], [37, 48], [39, 47], [42, 47], [45, 48], [47, 50]]
+                        }
+                    ]
+                },
+                categoryLabels: {
+                    mountains: "Kalnai, dubos ir lygumos",
+                    rivers: "Upės",
+                    lakes: "Ežerai"
                 }
-            ]
+            },
+            lithuania: {
+                name: "Lietuvos Geografija",
+                center: [55.169438, 23.881275],
+                zoom: 7,
+                categories: {
+                    rivers: [
+                        {
+                            name: "Nemunas",
+                            lat: 54.9,
+                            lng: 23.4,
+                            zoom: 9,
+                            type: "rivers",
+                            polygon: [[54.5, 24.9], [54.6, 24.5], [54.9, 23.9], [55.0, 23.4], [55.1, 22.8], [55.2, 22.3], [55.3, 21.8], [55.4, 21.3]]
+                        },
+                        {
+                            name: "Neris",
+                            lat: 54.9,
+                            lng: 24.6,
+                            zoom: 9,
+                            type: "rivers",
+                            polygon: [[54.7, 25.3], [54.75, 25.0], [54.8, 24.7], [54.85, 24.4], [54.9, 24.1], [54.92, 23.95], [54.9, 23.9]]
+                        },
+                        {
+                            name: "Merkys",
+                            lat: 54.4,
+                            lng: 24.5,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[54.2, 24.8], [54.25, 24.7], [54.35, 24.6], [54.45, 24.5], [54.55, 24.3], [54.6, 24.15]]
+                        },
+                        {
+                            name: "Šventoji",
+                            lat: 55.5,
+                            lng: 25.1,
+                            zoom: 9,
+                            type: "rivers",
+                            polygon: [[56.0, 25.5], [55.8, 25.4], [55.6, 25.3], [55.4, 25.15], [55.2, 25.0], [55.0, 24.85], [54.95, 24.7]]
+                        },
+                        {
+                            name: "Nevėžis",
+                            lat: 55.3,
+                            lng: 24.1,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[55.7, 24.6], [55.6, 24.5], [55.45, 24.3], [55.3, 24.1], [55.15, 23.95], [55.0, 23.85]]
+                        },
+                        {
+                            name: "Mūša",
+                            lat: 56.2,
+                            lng: 24.8,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[55.9, 24.5], [56.0, 24.6], [56.1, 24.7], [56.2, 24.8], [56.3, 24.9], [56.4, 25.0]]
+                        },
+                        {
+                            name: "Dubysa",
+                            lat: 55.08,
+                            lng: 23.43,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[55.5, 23.2], [55.4, 23.25], [55.25, 23.3], [55.1, 23.4], [55.0, 23.5], [54.95, 23.6]]
+                        },
+                        {
+                            name: "Venta",
+                            lat: 56.3,
+                            lng: 21.8,
+                            zoom: 9,
+                            type: "rivers",
+                            polygon: [[56.8, 22.3], [56.6, 22.15], [56.4, 22.0], [56.2, 21.8], [56.0, 21.55], [55.9, 21.3], [55.85, 21.1]]
+                        },
+                        {
+                            name: "Jūra",
+                            lat: 55.4,
+                            lng: 21.9,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[55.85, 21.75], [55.7, 21.8], [55.55, 21.85], [55.4, 21.9], [55.25, 22.0], [55.1, 22.15]]
+                        },
+                        {
+                            name: "Minija",
+                            lat: 55.5,
+                            lng: 21.5,
+                            zoom: 10,
+                            type: "rivers",
+                            polygon: [[56.0, 21.7], [55.85, 21.65], [55.7, 21.6], [55.55, 21.55], [55.4, 21.48], [55.3, 21.4], [55.2, 21.35]]
+                        }
+                    ],
+                    lakes: [
+                        {
+                            name: "Drūkšiai",
+                            lat: 55.78,
+                            lng: 26.36,
+                            zoom: 11,
+                            type: "lakes",
+                            polygon: [[55.82, 26.32], [55.84, 26.37], [55.82, 26.42], [55.78, 26.44], [55.74, 26.42], [55.72, 26.37], [55.74, 26.32], [55.78, 26.30]]
+                        },
+                        {
+                            name: "Tauragnas",
+                            lat: 55.65,
+                            lng: 26.06,
+                            zoom: 12,
+                            type: "lakes",
+                            polygon: [[55.67, 26.04], [55.68, 26.07], [55.67, 26.09], [55.65, 26.10], [55.63, 26.08], [55.62, 26.05], [55.64, 26.03]]
+                        },
+                        {
+                            name: "Lakajai",
+                            lat: 55.52,
+                            lng: 25.95,
+                            zoom: 12,
+                            type: "lakes",
+                            polygon: [[55.54, 25.93], [55.55, 25.96], [55.54, 25.98], [55.52, 25.99], [55.50, 25.97], [55.49, 25.94], [55.51, 25.92]]
+                        },
+                        {
+                            name: "Dusia",
+                            lat: 54.25,
+                            lng: 23.45,
+                            zoom: 11,
+                            type: "lakes",
+                            polygon: [[54.30, 23.40], [54.32, 23.46], [54.30, 23.52], [54.25, 23.54], [54.20, 23.51], [54.18, 23.45], [54.20, 23.39], [54.25, 23.37]]
+                        },
+                        {
+                            name: "Žuvintas",
+                            lat: 54.48,
+                            lng: 23.88,
+                            zoom: 12,
+                            type: "lakes",
+                            polygon: [[54.50, 23.85], [54.52, 23.89], [54.51, 23.93], [54.48, 23.94], [54.45, 23.91], [54.44, 23.87], [54.46, 23.84]]
+                        },
+                        {
+                            name: "Vištytis",
+                            lat: 54.42,
+                            lng: 22.73,
+                            zoom: 11,
+                            type: "lakes",
+                            polygon: [[54.46, 22.68], [54.48, 22.74], [54.46, 22.79], [54.42, 22.81], [54.38, 22.78], [54.36, 22.73], [54.38, 22.67], [54.42, 22.65]]
+                        },
+                        {
+                            name: "Lūkstas",
+                            lat: 54.5,
+                            lng: 24.2,
+                            zoom: 12,
+                            type: "lakes",
+                            polygon: [[54.52, 24.18], [54.53, 24.21], [54.52, 24.24], [54.50, 24.25], [54.48, 24.23], [54.47, 24.20], [54.49, 24.17]]
+                        },
+                        {
+                            name: "Asvėja",
+                            lat: 55.9,
+                            lng: 26.0,
+                            zoom: 10,
+                            type: "lakes",
+                            polygon: [[56.0, 25.97], [56.02, 26.02], [55.95, 26.05], [55.88, 26.04], [55.82, 26.02], [55.78, 25.98], [55.80, 25.94], [55.88, 25.93], [55.95, 25.94]]
+                        }
+                    ],
+                    lagoons: [
+                        {
+                            name: "Kuršių marios",
+                            lat: 55.37,
+                            lng: 21.15,
+                            zoom: 9,
+                            type: "lagoons",
+                            polygon: [[55.75, 21.05], [55.72, 21.20], [55.68, 21.35], [55.60, 21.42], [55.50, 21.45], [55.38, 21.43], [55.25, 21.38], [55.12, 21.30], [55.05, 21.18], [55.02, 21.05], [55.05, 20.92], [55.12, 20.82], [55.22, 20.88], [55.35, 20.95], [55.50, 21.00], [55.65, 20.98], [55.72, 21.00]]
+                        },
+                        {
+                            name: "Kauno marios",
+                            lat: 54.88,
+                            lng: 24.08,
+                            zoom: 10,
+                            type: "lagoons",
+                            polygon: [[54.82, 23.88], [54.84, 24.05], [54.88, 24.20], [54.92, 24.32], [54.95, 24.38], [54.96, 24.25], [54.98, 24.15], [54.96, 24.05], [54.92, 23.95], [54.88, 23.88], [54.85, 23.85]]
+                        }
+                    ],
+                    highlands: [
+                        {
+                            name: "Žemaičių aukštuma",
+                            lat: 56.05,
+                            lng: 21.89,
+                            zoom: 9,
+                            type: "highlands",
+                            polygon: [[56.35, 21.45], [56.40, 21.85], [56.35, 22.25], [56.25, 22.45], [56.10, 22.50], [55.90, 22.40], [55.75, 22.15], [55.70, 21.85], [55.75, 21.55], [55.90, 21.35], [56.10, 21.30], [56.25, 21.35]]
+                        },
+                        {
+                            name: "Sūduvos aukštuma",
+                            lat: 54.3,
+                            lng: 23.0,
+                            zoom: 9,
+                            type: "highlands",
+                            polygon: [[54.55, 22.65], [54.60, 23.00], [54.55, 23.35], [54.45, 23.50], [54.30, 23.55], [54.15, 23.45], [54.05, 23.25], [54.05, 22.95], [54.10, 22.70], [54.25, 22.55], [54.40, 22.55]]
+                        },
+                        {
+                            name: "Dzūkų aukštuma",
+                            lat: 54.2,
+                            lng: 24.5,
+                            zoom: 9,
+                            type: "highlands",
+                            polygon: [[54.45, 24.05], [54.50, 24.35], [54.48, 24.70], [54.40, 24.95], [54.28, 25.05], [54.12, 25.00], [53.98, 24.75], [53.95, 24.45], [54.00, 24.15], [54.15, 23.95], [54.30, 23.95]]
+                        },
+                        {
+                            name: "Medininkų aukštuma",
+                            lat: 54.5,
+                            lng: 25.6,
+                            zoom: 10,
+                            type: "highlands",
+                            polygon: [[54.70, 25.35], [54.75, 25.60], [54.72, 25.85], [54.65, 26.00], [54.55, 26.05], [54.42, 25.95], [54.35, 25.75], [54.32, 25.50], [54.35, 25.30], [54.45, 25.20], [54.58, 25.25]]
+                        },
+                        {
+                            name: "Aukštaičių aukštuma",
+                            lat: 55.8,
+                            lng: 25.3,
+                            zoom: 9,
+                            type: "highlands",
+                            polygon: [[56.15, 24.65], [56.25, 25.15], [56.25, 25.65], [56.15, 26.15], [55.95, 26.45], [55.70, 26.55], [55.45, 26.45], [55.30, 26.15], [55.25, 25.65], [55.30, 25.15], [55.45, 24.75], [55.70, 24.55], [55.95, 24.55]]
+                        }
+                    ]
+                },
+                categoryLabels: {
+                    rivers: "Upės",
+                    lakes: "Ežerai",
+                    lagoons: "Marių",
+                    highlands: "Aukštumos"
+                }
+            }
         };
 
         // Color scheme for different feature types
@@ -583,10 +1082,25 @@
                 fillOpacity: 0.3,
                 opacity: 0.8,
                 weight: 3
+            },
+            lagoons: {
+                color: '#4682B4',        // Steel blue outline
+                fillColor: '#4682B4',    // Steel blue fill
+                fillOpacity: 0.3,
+                opacity: 0.8,
+                weight: 3
+            },
+            highlands: {
+                color: '#CD853F',        // Peru/tan outline
+                fillColor: '#DEB887',    // Burlywood fill (lighter tan)
+                fillOpacity: 0.3,
+                opacity: 0.8,
+                weight: 3
             }
         };
 
         // Quiz state
+        let currentTestMode = null;
         let score = 0;
         let correct = 0;
         let incorrect = 0;
@@ -611,10 +1125,12 @@
 
         // Get all locations based on selected category
         function getAllLocations() {
+            if (!currentTestMode) return [];
+            const testConfig = testModes[currentTestMode];
             if (selectedCategory === 'all') {
-                return [...geographyData.mountains, ...geographyData.rivers, ...geographyData.lakes];
+                return Object.values(testConfig.categories).flat();
             }
-            return geographyData[selectedCategory];
+            return testConfig.categories[selectedCategory] || [];
         }
 
         // Add highlighted polygon zone or polyline
@@ -643,6 +1159,73 @@
                     });
                 }, 100);
             }
+        }
+
+        // Show homepage
+        function showHomepage() {
+            document.getElementById('homepage').classList.remove('hidden');
+            document.querySelector('.header').classList.remove('show');
+            document.querySelector('.container').classList.remove('show');
+        }
+
+        // Start test with selected mode
+        function startTest(mode) {
+            currentTestMode = mode;
+            const testConfig = testModes[mode];
+
+            // Hide homepage, show quiz UI
+            document.getElementById('homepage').classList.add('hidden');
+            document.querySelector('.header').classList.add('show');
+            document.querySelector('.container').classList.add('show');
+
+            // Recenter map for the test mode
+            map.setView(testConfig.center, testConfig.zoom);
+
+            // Update category dropdown dynamically
+            updateCategoryDropdown(testConfig);
+
+            // Reset and start quiz
+            resetQuizState();
+            loadQuestion();
+        }
+
+        // Update category dropdown based on test mode
+        function updateCategoryDropdown(testConfig) {
+            const select = document.getElementById('category-select');
+            select.innerHTML = '<option value="all">Visos kategorijos</option>';
+
+            Object.keys(testConfig.categories).forEach(catKey => {
+                const option = document.createElement('option');
+                option.value = catKey;
+                option.textContent = testConfig.categoryLabels[catKey];
+                select.appendChild(option);
+            });
+
+            selectedCategory = 'all';
+        }
+
+        // Return to homepage
+        function returnToHomepage() {
+            if (currentPolygon) map.removeLayer(currentPolygon);
+            currentTestMode = null;
+            resetQuizState();
+            document.getElementById('results-overlay').classList.remove('show');
+            showHomepage();
+        }
+
+        // Reset quiz state
+        function resetQuizState() {
+            score = 0;
+            correct = 0;
+            incorrect = 0;
+            questionNum = 1;
+            answeredQuestions.clear();
+            userInteracted = false;
+
+            document.getElementById('score').textContent = 0;
+            document.getElementById('correct').textContent = 0;
+            document.getElementById('incorrect').textContent = 0;
+            document.getElementById('question-num').textContent = 1;
         }
 
         // Load new question
@@ -777,25 +1360,53 @@
 
         // Restart quiz
         function restartQuiz() {
-            // Reset all state
-            score = 0;
-            correct = 0;
-            incorrect = 0;
-            questionNum = 1;
-            answeredQuestions.clear();
-            userInteracted = false;
-
-            // Update UI
-            document.getElementById('score').textContent = 0;
-            document.getElementById('correct').textContent = 0;
-            document.getElementById('incorrect').textContent = 0;
-            document.getElementById('question-num').textContent = 1;
+            resetQuizState();
 
             // Hide results overlay
             document.getElementById('results-overlay').classList.remove('show');
 
             // Load first question
             loadQuestion();
+        }
+
+        // Show reference map with all locations labeled
+        function showReferenceMap() {
+            if (!currentTestMode) return;
+
+            const overlay = document.getElementById('reference-overlay');
+            const testConfig = testModes[currentTestMode];
+
+            // Update title
+            document.getElementById('reference-title').textContent = testConfig.name + ' - Žemėlapis';
+
+            // Generate interactive Leaflet map with labels
+            const refMapEl = document.getElementById('reference-map-display');
+            refMapEl.innerHTML = '';
+
+            const refMap = L.map(refMapEl).setView(testConfig.center, testConfig.zoom);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap © CartoDB',
+                maxZoom: 18
+            }).addTo(refMap);
+
+            // Add all locations with permanent labels
+            Object.entries(testConfig.categories).forEach(([catKey, locations]) => {
+                locations.forEach(loc => {
+                    const style = colorScheme[loc.type];
+                    if (loc.type === 'rivers') {
+                        L.polyline(loc.polygon, style).addTo(refMap)
+                            .bindTooltip(loc.name, {permanent: true, direction: 'center', className: 'map-label'});
+                    } else {
+                        L.polygon(loc.polygon, style).addTo(refMap)
+                            .bindTooltip(loc.name, {permanent: true, direction: 'center', className: 'map-label'});
+                    }
+                });
+            });
+
+            overlay.classList.add('show');
+
+            // Force map to recalculate size after overlay is shown
+            setTimeout(() => refMap.invalidateSize(), 100);
         }
 
         // Allow Enter key to submit
@@ -831,8 +1442,25 @@
         // Restart button handler
         document.getElementById('restart-btn').addEventListener('click', restartQuiz);
 
-        // Initialize first question
-        loadQuestion();
+        // Homepage mode selection buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const mode = e.currentTarget.dataset.mode;
+                startTest(mode);
+            });
+        });
+
+        // Return to homepage button
+        document.getElementById('home-btn').addEventListener('click', returnToHomepage);
+
+        // Reference map buttons
+        document.getElementById('reference-btn').addEventListener('click', showReferenceMap);
+        document.getElementById('close-reference').addEventListener('click', () => {
+            document.getElementById('reference-overlay').classList.remove('show');
+        });
+
+        // Initialize app - show homepage
+        showHomepage();
     </script>
 </body>
 </html>
