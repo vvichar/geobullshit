@@ -446,9 +446,10 @@
                     class="answer-input"
                     placeholder="Įveskite atsakymą..."
                     autocomplete="off"
+                    aria-label="Atsakymo laukas"
                 />
 
-                <button class="submit-btn" id="submit-btn">Patikrinti</button>
+                <button class="submit-btn" id="submit-btn" aria-label="Patikrinti atsakymą">Patikrinti</button>
 
                 <div class="feedback" id="feedback"></div>
             </div>
@@ -695,6 +696,15 @@
             const correctAnswer = currentQuestion.name.toLowerCase();
             const feedback = document.getElementById('feedback');
 
+            // Validate input is not empty
+            if (!userAnswer) {
+                feedback.className = 'feedback incorrect show';
+                feedback.textContent = '✗ Prašome įvesti atsakymą!';
+                answerInput.disabled = false;
+                answerInput.focus();
+                return;
+            }
+
             // Disable input and submit button
             answerInput.disabled = true;
             document.getElementById('submit-btn').disabled = true;
@@ -773,6 +783,13 @@
             questionNum = 1;
             answeredQuestions.clear();
             userInteracted = false;
+            currentQuestion = null;
+            
+            // Remove any existing polygon
+            if (currentPolygon) {
+                map.removeLayer(currentPolygon);
+                currentPolygon = null;
+            }
 
             // Update UI
             document.getElementById('score').textContent = 0;
@@ -808,9 +825,24 @@
             correct = 0;
             incorrect = 0;
             answeredQuestions.clear();
+            userInteracted = false;
+            currentQuestion = null;
+            
+            // Remove any existing polygon
+            if (currentPolygon) {
+                map.removeLayer(currentPolygon);
+                currentPolygon = null;
+            }
+            
             document.getElementById('score').textContent = score;
             document.getElementById('correct').textContent = correct;
             document.getElementById('incorrect').textContent = incorrect;
+            
+            // Reset feedback
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback';
+            feedback.textContent = '';
+            
             loadQuestion();
         });
 
